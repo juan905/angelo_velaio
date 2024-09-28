@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms'; // Asegúrate de importar esto
+
 import { PersonFormComponent } from './person-form/person-form.component';
 import { PersonListComponent } from './person-list/person-list.component';
 import { PersonsRoutingModule } from './person-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -13,7 +16,13 @@ import { PersonsRoutingModule } from './person-routing.module';
   ],
   imports: [
     CommonModule,
-    PersonsRoutingModule
+    PersonsRoutingModule,
+    ReactiveFormsModule,
+    SharedModule
+  ],
+  exports: [
+    PersonFormComponent,
+    PersonListComponent
   ]
 })
 export class PersonsModule { }

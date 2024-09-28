@@ -1,1 +1,30 @@
-<p>person-form works!</p>
+<form [formGroup]="personForm" (ngSubmit)="crearPersona()">
+    <div>
+        <label for="nombreCompleto">Nombre Completo</label>
+        <input id="nombreCompleto" formControlName="nombreCompleto" />
+        <div *ngIf="personForm.get('nombreCompleto')?.invalid && personForm.get('nombreCompleto')?.touched">
+            El nombre debe tener al menos 5 caracteres.
+        </div>
+    </div>
+
+    <div>
+        <label for="edad">Edad</label>
+        <input id="edad" formControlName="edad" type="number" />
+        <div *ngIf="personForm.get('edad')?.invalid && personForm.get('edad')?.touched">
+            La edad debe ser mayor o igual a 18.
+        </div>
+    </div>
+
+    <div formArrayName="habilidades">
+        <label>Habilidades</label>
+        <div *ngFor="let habilidad of habilidades.controls; let i = index">
+            <input [formControlName]="i" />
+            <button type="button" (click)="eliminarHabilidad(i)">
+                Eliminar Habilidad
+            </button>
+        </div>
+    </div>
+
+    <button type="button" (click)="agregarHabilidad()">Agregar Habilidad</button>
+    <button type="submit" [disabled]="personForm.invalid">Crear Persona</button>
+</form>

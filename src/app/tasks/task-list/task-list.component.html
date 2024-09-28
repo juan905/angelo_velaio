@@ -1,1 +1,18 @@
-<p>task-list works!</p>
+<button routerLink="/create">Agregar Tarea</button>
+
+<div *ngIf="tareas.length > 0; else noTareas">
+    <app-table [data]="tareas" [displayedColumns]="columnas"></app-table>
+</div>
+
+<ng-template #noTareas>
+    <p>No hay tareas registradas.</p>
+</ng-template>
+
+<div>
+    <label for="filtro">Filtrar Tareas:</label>
+    <select id="filtro" (change)="filtrar($event)">
+        <option value="">Todas</option>
+        <option value="completadas">Completadas</option>
+        <option value="pendientes">Pendientes</option>
+    </select>
+</div>

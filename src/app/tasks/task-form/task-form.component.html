@@ -1,1 +1,47 @@
-<p>task-form works!</p>
+<form [formGroup]="taskForm" (ngSubmit)="crearTarea()">
+    <!-- Campo para el nombre de la tarea -->
+    <label for="nombreTarea">Nombre de la Tarea:</label>
+    <input id="nombreTarea" formControlName="nombreTarea" type="text">
+    <div *ngIf="taskForm.get('nombreTarea')?.invalid && taskForm.get('nombreTarea')?.touched">
+        <small>El nombre de la tarea es obligatorio y debe tener al menos 5 caracteres.</small>
+    </div>
+
+    <!-- Campo para la fecha límite -->
+    <label for="fechaLimite">Fecha Límite:</label>
+    <input id="fechaLimite" formControlName="fechaLimite" type="date">
+    <div *ngIf="taskForm.get('fechaLimite')?.invalid && taskForm.get('fechaLimite')?.touched">
+        <small>La fecha límite es obligatoria.</small>
+    </div>
+
+    <!-- Lista de personas asociadas -->
+    <div *ngFor="let persona of personasSeleccionadas">
+        <!-- Nombre completo de la persona -->
+        <label for="nombreCompleto">Nombre de la Persona:</label>
+        <input id="nombreCompleto" value="{{persona.nombreCompleto}}" disabled>
+
+        <!-- Edad de la persona -->
+        <label for="edad">Edad:</label>
+        <input id="edad" value="{{persona.edad}}" disabled>
+
+        <!-- Habilidades de la persona -->
+        <label>Habilidades:</label>
+        <ul>
+            <li *ngFor="let habilidad of persona.habilidades">{{ habilidad }}</li>
+        </ul>
+
+        <!-- Botón para eliminar persona -->
+        <button type="button" (click)="eliminarPersona(persona.id)">Eliminar Persona</button>
+    </div>
+
+    <!-- Botón para agregar nueva persona -->
+    <label for="nombrePersona">Seleccionar Persona:</label>
+    <input id="nombrePersona" formControlName="nombrePersona" type="text" list="personasList">
+    <datalist id="personasList">
+        <option *ngFor="let persona of personas" [value]="persona.nombreCompleto"></option>
+    </datalist>
+
+    <button type="button" (click)="agregarPersona()">Agregar Persona</button>
+
+    <!-- Botón para crear tarea -->
+    <button type="submit" [disabled]="taskForm.invalid">Crear Tarea</button>
+</form>
